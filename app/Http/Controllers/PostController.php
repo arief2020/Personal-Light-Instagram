@@ -24,7 +24,8 @@ class PostController extends Controller
 
     public function archive(Request $request)
     {
-        return Inertia::render('Post/ArchivePost');
+        $post = Post::where('user_id', Auth::id())->where('is_archived', true)->get();
+        return Inertia::render('Post/ArchivePost', ['posts' => $post]);
     }
 
     public function store(Request $request)

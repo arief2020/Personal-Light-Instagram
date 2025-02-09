@@ -13,42 +13,42 @@ const props = defineProps({
 });
 
 import { ref } from "vue";
-
+console.log(props.posts);
 // Data Dummy
-const archiveData = ref([
-    {
-        id: 1,
-        type: "image",
-        url: "https://via.placeholder.com/150",
-        date: "2024-02-01",
-        caption: "Beautiful Sunset",
-    },
-    {
-        id: 2,
-        type: "video",
-        url: "https://www.w3schools.com/html/mov_bbb.mp4",
-        date: "2024-02-02",
-        caption: "My Trip to Bali",
-    },
-    {
-        id: 3,
-        type: "image",
-        url: "https://via.placeholder.com/150",
-        date: "2024-02-05",
-        caption: "Lovely Cat",
-    },
-    {
-        id: 4,
-        type: "image",
-        url: "https://via.placeholder.com/150",
-        date: "2024-02-10",
-        caption: "Snowy Mountain",
-    },
-]);
+// const archiveData = ref([
+//     {
+//         id: 1,
+//         type: "image",
+//         url: "https://via.placeholder.com/150",
+//         date: "2024-02-01",
+//         caption: "Beautiful Sunset",
+//     },
+//     {
+//         id: 2,
+//         type: "video",
+//         url: "https://www.w3schools.com/html/mov_bbb.mp4",
+//         date: "2024-02-02",
+//         caption: "My Trip to Bali",
+//     },
+//     {
+//         id: 3,
+//         type: "image",
+//         url: "https://via.placeholder.com/150",
+//         date: "2024-02-05",
+//         caption: "Lovely Cat",
+//     },
+//     {
+//         id: 4,
+//         type: "image",
+//         url: "https://via.placeholder.com/150",
+//         date: "2024-02-10",
+//         caption: "Snowy Mountain",
+//     },
+// ]);
 
 const startDate = ref("");
 const endDate = ref("");
-const filteredData = ref([...archiveData.value]);
+const filteredData = ref([...props.posts]);
 
 // Fungsi untuk mendapatkan tanggal hari ini dalam format YYYY-MM-DD
 const getTodayDate = () => {
@@ -60,7 +60,7 @@ const getTodayDate = () => {
 const applyFilter = () => {
     const today = getTodayDate();
 
-    filteredData.value = archiveData.value.filter((post) => {
+    filteredData.value = props.posts.filter((post) => {
         if (startDate.value && endDate.value) {
             // Jika startDate dan endDate diisi, filter berdasarkan rentang
             return post.date >= startDate.value && post.date <= endDate.value;
@@ -89,6 +89,20 @@ const downloadArchive = (format) => {
 
     console.log(message);
 };
+
+function formatDate(isoString) {
+    const months = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
+    const date = new Date(isoString);
+    const day = date.getUTCDate();
+    const month = months[date.getUTCMonth()];
+    const year = date.getUTCFullYear();
+
+    return `${day} ${month} ${year}`;
+}
 </script>
 
 <template>
@@ -166,7 +180,7 @@ const downloadArchive = (format) => {
                                     Your browser does not support the video tag.
                                 </video>
                             </td>
-                            <td class="border p-2">{{ post.date }}</td>
+                            <td class="border p-2">{{ formatDate(post.created_at) }}</td>
                             <td class="border p-2">{{ post.caption }}</td>
                         </tr>
                     </tbody>
