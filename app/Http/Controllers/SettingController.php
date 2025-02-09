@@ -3,22 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class SettingController extends Controller
 {
     public function index(Request $request)
     {
         $setting = DB::table('settings')->where('user_id', Auth::id())->first();
+
         return Inertia::render('Setting/Index', [
             'setting' => $setting,
 
         ]);
     }
 
-    public function update(Request $request){
+    /**
+     * Update the specified resource in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
 
         // dd($request->all());
         $userId = Auth::id();

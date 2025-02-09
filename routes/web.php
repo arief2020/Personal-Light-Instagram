@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/archive', [PostController::class, 'archive'])->name('posts.archive');
     Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::post('/posts/archive/{id}', [PostController::class, 'storeArchive'])->name('posts.storeArchive');
 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');

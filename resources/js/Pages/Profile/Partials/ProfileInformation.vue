@@ -12,9 +12,7 @@ const props = defineProps({
     post: Array,
 });
 
-console.log(`post: ${props.post[0].caption}`);
 const user = usePage().props.auth.user;
-console.log(`avatar: ${user}`);
 
 // const form = useForm({
 //     name: user.name,
@@ -40,6 +38,12 @@ const handleSubmit = () => {
     // console.log(form)
 
     // Setelah submit, tutup modal
+    closeModal();
+};
+
+const archivePost = () => {
+    // console.log(selectedPost.value.id);
+    form.post(`/posts/archive/${selectedPost.value.id}`);
     closeModal();
 };
 
@@ -154,7 +158,7 @@ function submit() {
                         Tutup
                     </button>
                     <button
-                        @click="closeModalPost"
+                        @click="archivePost"
                         class="bg-slate-500 text-white p-2 rounded"
                     >
                         Archive
